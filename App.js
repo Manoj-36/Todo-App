@@ -1,9 +1,10 @@
 import React,{useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createStackNavigator, HeaderTitle } from '@react-navigation/stack';
 import { Button, Keyboard, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Task from './Components/Task';
-import D from './Components/D'
+import D from './Components/D';
 
 function App({navigation}) {
 
@@ -27,11 +28,11 @@ function App({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.tasksWrapper}>
-        {/* <Text style={styles.sectionTitle}> Tasks </Text> */}
+        <Text style={styles.sectionTitle}> Tasks </Text>
         <Text
         title="Details" style={styles.buttonText}
-        onPress={() => navigation.navigate("DETAILS")}
-        >Tasks</Text>
+        onPress={() => navigation.navigate("Details")}
+        >ⓘ</Text>
 
         <View style={styles.items}>
 
@@ -73,22 +74,38 @@ function App({navigation}) {
 const Details = () => {
   return(
       <View>
-        {/* <D /> */}
-        <Text>hello</Text>
+        <D />
       </View>
   );
 }
 
 const Stack = createStackNavigator();
+// const Drawer = createDrawerNavigator();
+
   
 const About = () => {
   return(
-    <NavigationContainer>
-       <Stack.Navigator>
-      <Stack.Screen name="Home" style={styles.topBar} component={App} />
-      <Stack.Screen name="DETAILS" component={Details} />
 
-    </Stack.Navigator>
+    <NavigationContainer>
+      {/* <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="Home" component={App} />
+        <Drawer.Screen name="Details" component={Details} />
+      </Drawer.Navigator> */}
+
+      <Stack.Navigator>
+      <Stack.Screen name="Home" style={styles.topBar} component={App} options={{
+        headerStyle:{
+          backgroundColor: '#FFEEDD', 
+        },
+        
+      }} />
+      <Stack.Screen name="Details" component={Details} options={{
+        headerStyle:{
+          backgroundColor: '#FFEEDD', 
+        },
+        
+      }} />
+      </Stack.Navigator>
     </NavigationContainer>
 
   );
@@ -100,7 +117,7 @@ export default About;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000500',
+    backgroundColor: '#F8F7FF',
   },
   items:{
     // marginTop: 30,
@@ -109,6 +126,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     color: '#000',
+    bottom: 10,
   },
   tasksWrapper:{
     paddingTop: 20,
@@ -131,7 +149,7 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     borderWidth: 1,
     borderColor: '#362417',
-    width: 320,
+    width: 280,
     fontSize: 18,
     color: '#000',
   },
@@ -152,8 +170,10 @@ const styles = StyleSheet.create({
   buttonText:{
     fontSize: 25,
     fontWeight: 'bold',
-    color: '#fff',
-    paddingBottom: 20,
+    color: '#000',
+    paddingLeft: 320,
+    marginTop: -30,
+    bottom:10,
   },
   topBar:{
     tintColor: 'blue',
