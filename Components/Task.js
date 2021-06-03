@@ -3,15 +3,18 @@ import { View,  Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 const Task = (props) => {
     return(
-        <View style={styles.items}>
-            <View style={styles.itemLeft}>
-                <View style={styles.square}></View>
-                <Text style={styles.itemText}>{props.text}</Text>
+            <View style={styles.items}>
+                <View style={styles.itemLeft}>
+                    <View style={styles.square} ></View>
+                    <Text style={styles.itemText}>{props.text}</Text>
+                </View>
+                <View style={styles.circular}  >
+                </View>
             </View>
-            <View style={styles.circular}></View>
-        </View>
     )
 }
+
+// onPress={() => completeTask(index)}
 
 const styles = StyleSheet.create({
     items:{
@@ -49,7 +52,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#92817A',
         borderRadius: 4,
     },
+    bin:{
 
+    }
 });
 
 

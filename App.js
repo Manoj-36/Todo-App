@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator, HeaderTitle } from '@react-navigation/stack';
-import { Button, Keyboard, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Button, Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Task from './Components/Task';
 import D from './Components/D';
 
@@ -28,24 +28,27 @@ function App({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.tasksWrapper}>
-        <Text style={styles.sectionTitle}> Tasks </Text>
-        <Text
-        title="Details" style={styles.buttonText}
-        onPress={() => navigation.navigate("Details")}
-        >ⓘ</Text>
-
-        <View style={styles.items}>
-
-          {
-            taskItems.map((item, index) =>{
-              return (
-                <TouchableOpacity key={index} onPress={() => completeTask(index)}>
-                    <Task  text={item} />
-                </TouchableOpacity>
-              )
-            })
-          }
+        <View style={styles.textIcon}>
+          <Text style={styles.sectionTitle}> Tasks </Text>
+          <Text
+          title="Details" style={styles.buttonText}
+          onPress={() => navigation.navigate("Details")}
+          >ⓘ</Text>
         </View>
+        <ScrollView>
+          <View style={styles.items}>
+
+            {
+              taskItems.map((item, index) =>{
+                return (
+                  <TouchableOpacity key={index} onPress={() => completeTask(index)}>
+                      <Task  text={item} />
+                  </TouchableOpacity>
+                )
+              })
+            }
+          </View>
+        </ScrollView>
 
       </View>
 
@@ -79,20 +82,20 @@ const Details = () => {
   );
 }
 
-const Stack = createStackNavigator();
-// const Drawer = createDrawerNavigator();
+// const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
   
 const About = () => {
   return(
 
     <NavigationContainer>
-      {/* <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Home" component={App} />
         <Drawer.Screen name="Details" component={Details} />
-      </Drawer.Navigator> */}
+      </Drawer.Navigator>
 
-      <Stack.Navigator>
+      {/* <Stack.Navigator>
       <Stack.Screen name="Home" style={styles.topBar} component={App} options={{
         headerStyle:{
           backgroundColor: '#FFEEDD', 
@@ -105,8 +108,9 @@ const About = () => {
         },
         
       }} />
-      </Stack.Navigator>
+      </Stack.Navigator> */}
     </NavigationContainer>
+  
 
   );
 }
@@ -132,6 +136,9 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingHorizontal: 20,
   },
+  textIcon:{
+    flexDirection: 'row',
+  },
 
   writeTaskWrapper:{
     position: 'absolute',
@@ -143,13 +150,14 @@ const styles = StyleSheet.create({
   },
 
   input:{
-    paddingVertical: 13,
-    paddingHorizontal: 15,
+    flex: 1,
+    paddingHorizontal: 20,
     backgroundColor: '#fff',
     borderRadius: 60,
     borderWidth: 1,
+    alignItems: 'stretch',
     borderColor: '#362417',
-    width: 280,
+    justifyContent: 'center',
     fontSize: 18,
     color: '#000',
   },
@@ -168,14 +176,9 @@ const styles = StyleSheet.create({
     fontSize: 35,
   },
   buttonText:{
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#000',
-    paddingLeft: 320,
-    marginTop: -30,
-    bottom:10,
   },
-  topBar:{
-    tintColor: 'blue',
-  },
+ 
 });
