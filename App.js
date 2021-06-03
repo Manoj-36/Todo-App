@@ -1,8 +1,12 @@
 import React,{useState} from 'react';
-import { Keyboard, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Button, Keyboard, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Task from './Components/Task';
+import D from './Components/D'
 
-export default function App() {
+function App({navigation}) {
+
   const [task , setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
 
@@ -18,11 +22,16 @@ export default function App() {
     setTaskItems(itemCopy);
   }
 
+ 
 
   return (
     <View style={styles.container}>
       <View style={styles.tasksWrapper}>
-        <Text style={styles.sectionTitle}> Tasks </Text>
+        {/* <Text style={styles.sectionTitle}> Tasks </Text> */}
+        <Text
+        title="Details" style={styles.buttonText}
+        onPress={() => navigation.navigate("DETAILS")}
+        >Tasks</Text>
 
         <View style={styles.items}>
 
@@ -54,8 +63,39 @@ export default function App() {
 
 
     </View>
+
+    // <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    //   <Text>Home Screen</Text>
+    // </View>
   );
 }
+
+const Details = () => {
+  return(
+      <View>
+        {/* <D /> */}
+        <Text>hello</Text>
+      </View>
+  );
+}
+
+const Stack = createStackNavigator();
+  
+const About = () => {
+  return(
+    <NavigationContainer>
+       <Stack.Navigator>
+      <Stack.Screen name="Home" style={styles.topBar} component={App} />
+      <Stack.Screen name="DETAILS" component={Details} />
+
+    </Stack.Navigator>
+    </NavigationContainer>
+
+  );
+}
+
+export default About;
+
 
 const styles = StyleSheet.create({
   container: {
@@ -63,15 +103,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#000500',
   },
   items:{
-    marginTop: 30,
+    // marginTop: 30,
   },
   sectionTitle:{
     fontSize: 30,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#000',
   },
   tasksWrapper:{
-    paddingTop: 50,
+    paddingTop: 20,
     paddingHorizontal: 20,
   },
 
@@ -109,5 +149,13 @@ const styles = StyleSheet.create({
   addText:{
     fontSize: 35,
   },
-
+  buttonText:{
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: '#fff',
+    paddingBottom: 20,
+  },
+  topBar:{
+    tintColor: 'blue',
+  },
 });
