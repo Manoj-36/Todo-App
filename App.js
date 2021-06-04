@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator, HeaderTitle } from '@react-navigation/stack';
-import { Button, Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Button, Keyboard, Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Task from './Components/Task';
 import D from './Components/D';
 
@@ -23,9 +23,8 @@ function App({navigation}) {
     setTaskItems(itemCopy);
   }
 
- 
-
   return (
+    
     <View style={styles.container}>
       <View style={styles.tasksWrapper}>
         <View style={styles.textIcon}>
@@ -33,7 +32,7 @@ function App({navigation}) {
           <Text
           title="Details" style={styles.buttonText}
           onPress={() => navigation.navigate("Details")}
-          >ⓘ</Text>
+          ></Text>
         </View>
         <ScrollView>
           <View style={styles.items}>
@@ -41,17 +40,20 @@ function App({navigation}) {
             {
               taskItems.map((item, index) =>{
                 return (
-                  <TouchableOpacity key={index} onPress={() => completeTask(index)}>
-                      <Task  text={item} />
-                  </TouchableOpacity>
+                    <View style={styles.binItem}>
+                        <Task  text={item} />
+                        <TouchableOpacity key={index} onPress={() => completeTask(index)}  >
+                        <Image source={require('./assets/bin2.png')}  style={styles.bin}/>
+                      </TouchableOpacity>
+                    </View>
                 )
               })
             }
           </View>
         </ScrollView>
-
       </View>
 
+{/* hjvjhvhjvjh */}
       <KeyboardAvoidingView 
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.writeTaskWrapper}
@@ -64,7 +66,8 @@ function App({navigation}) {
           </View>
         </TouchableOpacity>
       </KeyboardAvoidingView>
-
+  
+{/* hchgchc */}
 
     </View>
 
@@ -149,13 +152,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+
   input:{
     flex: 1,
+    marginHorizontal: 10,
     paddingHorizontal: 20,
     backgroundColor: '#fff',
     borderRadius: 60,
     borderWidth: 1,
-    alignItems: 'stretch',
+    // alignItems: 'stretch',
     borderColor: '#362417',
     justifyContent: 'center',
     fontSize: 18,
@@ -180,5 +185,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#000',
   },
- 
+  bin:{
+    flex: .1,
+    marginTop: 15,
+    marginLeft: 10,
+    marginRight: 5,
+    alignItems: 'flex-end',
+  },
+  binItem:{
+    flexDirection: 'row',
+  },
 });
+
