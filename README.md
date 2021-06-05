@@ -3,7 +3,7 @@ Simple Todo app in React Native
 
 this app is written in React Native 
 
-you can download the app for android [here](https://github.com/Manoj-36/Todo-App/blob/master/android/app-release.apk)
+you can download the app for android [here](https://github.com/Manoj-36/Todo-App/blob/master/android/app-arm64-v8a-release.apk)
  
 # App 
 Its simple to use
