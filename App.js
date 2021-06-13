@@ -1,64 +1,83 @@
-import React,{useState} from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { createStackNavigator, HeaderTitle } from '@react-navigation/stack';
-import { Button, Keyboard, Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, {useState} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+// import { createStackNavigator, HeaderTitle } from '@react-navigation/stack';
+import {
+  Button,
+  Keyboard,
+  Image,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Alert,
+} from 'react-native';
 import Task from './Components/Task';
 import D from './Components/D';
 
 function App({navigation}) {
-
-  const [task , setTask] = useState();
+  const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
 
   const handleAddTask = () => {
     Keyboard.dismiss();
-    setTaskItems([...taskItems, task])
+    setTaskItems([...taskItems, task]);
     setTask(null);
-  }
 
-  const completeTask = (index) => {
+  };
+
+  const completeTask = index => {
     let itemCopy = [...taskItems];
     itemCopy.splice(index, 1);
     setTaskItems(itemCopy);
-  }
+  };
+
 
   return (
-    
     <View style={styles.container}>
       <View style={styles.tasksWrapper}>
         <View style={styles.textIcon}>
-          <Text style={styles.sectionTitle}> Tasks </Text>
+          {/* <Text style={styles.sectionTitle}> Tasks </Text> */}
           <Text
-          title="Details" style={styles.buttonText}
-          onPress={() => navigation.navigate("Details")}
-          ></Text>
+            title="Details"
+            style={styles.buttonText}
+            onPress={() => navigation.navigate('Details')}></Text>
         </View>
         <ScrollView>
           <View style={styles.items}>
-
-            {
-              taskItems.map((item, index) =>{
-                return (
-                    <View style={styles.binItem}>
-                        <Task  text={item} />
-                        <TouchableOpacity key={index} onPress={() => completeTask(index)}  >
-                        <Image source={require('./assets/bin2.png')}  style={styles.bin}/>
-                      </TouchableOpacity>
-                    </View>
-                )
-              })
-            }
+            {taskItems.map((item, index) => {
+              return (
+                <View style={styles.binItem}>
+                  <Task text={item} />
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => completeTask(index)}>
+                    <Image
+                      source={require('./assets/bin2.png')}
+                      style={styles.bin}
+                    />
+                  </TouchableOpacity>
+                </View>
+              );
+            })}
           </View>
         </ScrollView>
       </View>
 
-{/* hjvjhvhjvjh */}
-      <KeyboardAvoidingView 
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.writeTaskWrapper}
-      >
-        <TextInput style={styles.input} placeholder={'Write a Task'} value={task} onChangeText={text => setTask(text)} />
+      {/* hjvjhvhjvjh */}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.writeTaskWrapper}>
+        <TextInput
+          style={styles.input}
+          placeholder={'Write a Task'}
+          value={task}
+          onChangeText={text => setTask(text)}
+        />
 
         <TouchableOpacity onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
@@ -66,9 +85,8 @@ function App({navigation}) {
           </View>
         </TouchableOpacity>
       </KeyboardAvoidingView>
-  
-{/* hchgchc */}
 
+      {/* hchgchc */}
     </View>
 
     // <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -78,23 +96,32 @@ function App({navigation}) {
 }
 
 const Details = () => {
-  return(
-      <View>
-        <D />
-      </View>
+  return (
+    <View>
+      <D />
+    </View>
   );
-}
+};
 
 // const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-  
 const About = () => {
-  return(
-
+  return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="Home" component={App} />
+      <Drawer.Navigator
+        initialRouteName="Tasks"
+        edgeWidth={200}
+        screenOptions={{
+          headerShown: true,
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontSize: 25,
+          },
+        }}>
+        <Drawer.Screen name="Tasks" component={App} 
+        
+        />
         <Drawer.Screen name="Details" component={Details} />
       </Drawer.Navigator>
 
@@ -113,37 +140,34 @@ const About = () => {
       }} />
       </Stack.Navigator> */}
     </NavigationContainer>
-  
-
   );
-}
+};
 
 export default About;
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8F7FF',
   },
-  items:{
+  items: {
     // marginTop: 30,
   },
-  sectionTitle:{
+  sectionTitle: {
     fontSize: 30,
     fontWeight: 'bold',
     color: '#000',
     bottom: 10,
   },
-  tasksWrapper:{
+  tasksWrapper: {
     paddingTop: 20,
     paddingHorizontal: 20,
   },
-  textIcon:{
+  textIcon: {
     flexDirection: 'row',
   },
 
-  writeTaskWrapper:{
+  writeTaskWrapper: {
     position: 'absolute',
     bottom: 10,
     width: '100%',
@@ -152,8 +176,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-
-  input:{
+  input: {
     flex: 1,
     marginHorizontal: 10,
     paddingHorizontal: 20,
@@ -167,7 +190,7 @@ const styles = StyleSheet.create({
     color: '#000',
   },
 
-  addWrapper:{
+  addWrapper: {
     width: 50,
     height: 50,
     backgroundColor: '#fff',
@@ -177,23 +200,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#362417',
   },
-  addText:{
+  addText: {
     fontSize: 35,
   },
-  buttonText:{
+  buttonText: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#000',
   },
-  bin:{
-    flex: .1,
+  bin: {
+    flex: 0.1,
     marginTop: 15,
     marginLeft: 10,
     marginRight: 5,
     alignItems: 'flex-end',
   },
-  binItem:{
+  binItem: {
     flexDirection: 'row',
   },
 });
-
